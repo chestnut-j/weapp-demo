@@ -1,6 +1,14 @@
 export default {
   pages: [
-    'pages/index/index'
+    'pages/package-main/index'
+  ],
+  subPackages:[
+    {
+      root: 'pages/package-2048',
+      pages: [
+        'index'
+      ]
+    }
   ],
   window: {
     backgroundTextStyle: 'light',

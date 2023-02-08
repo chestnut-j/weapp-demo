@@ -55,16 +55,50 @@ export default {
       direction: '',
       threshold: 30,
       numbers: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      isGameOver: false,
       tempArrs: []
     }
   },
   created(){
     this.init()
   },
+  computed: {
+    isGameOver() {
+      let zeros = this.numbers.filter(item=>item===0)
+      if(zeros.length) {
+        return false
+      }
+      let temp = []
+      for(let i=0; i<4; i++) {
+        temp.push(this.numbers.slice(i*4,(i+1)*4))
+      }
+      for(let i=0; i<4; i++) {
+        for(let j=0; j<3; j++) {
+          if(temp[i][j]===temp[i][j+1]&&temp[i][j]!==2048){
+            return false
+          }
+        }
+      }
+
+      temp = []
+      for(let i=0; i<4; i++) {
+        let arr = []
+        for( let j=0;j<4;j++) {
+          arr.push(this.numbers[4*j+i])
+        }
+        temp.push(arr)
+      }
+      for(let i=0; i<4; i++) {
+        for(let j=0; j<3; j++) {
+          if(temp[i][j]===temp[i][j+1]&&temp[i][j]!==2048){
+            return false
+          }
+        }
+      }
+      return true
+    }
+  },
   methods: {
     init () {
-      this.isGameOver = false
       this.numbers = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
       this.fillEmptyCell()
       this.fillEmptyCell()
@@ -161,7 +195,7 @@ export default {
         } else if(this.direction==='down'||this.direction==='right'){
           let j = 3
           while(j>0){
-            if(arr[j-1]===arr[j] && arr[j]) {
+            if(arr[j-1]===arr[j] && arr[j]<2048) {
               let sum = [2*arr[j]]
               let remainFront = arr.slice(0,j-1)
               let remainBack = arr.slice(j+1,4)
