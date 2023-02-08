@@ -2,7 +2,7 @@
     "miniprogramRoot": "dist/",
     "projectname": "myApp",
     "description": "2048",
-    "appid": "wx23480c797f9a49c5",
+    "appid": "wx38349bfa6b30537d",
     "setting": {
         "urlCheck": true,
         "es6": false,
@@ -21,9 +21,12 @@
             "ignore": [],
             "disablePlugins": [],
             "outputPath": ""
-        }
+        },
+        "ignoreDevUnusedFiles": false,
+        "ignoreUploadUnusedFiles": true,
+        "lazyCodeLoading": "requiredComponents"
     },
-    "compileType": "miniprogram",
+    "compileType": "game",
     "simulatorType": "wechat",
     "simulatorPluginLibVersion": {},
     "condition": {},
