@@ -1,7 +1,7 @@
 <template>
   <view class="index">
     <AtNoticebar marquee>
-      0824版2048
+      0824版2048~
     </AtNoticebar>
     <view class="header">
       <AtButton
@@ -25,6 +25,9 @@
           {{item}}
         </view>
       </view>
+    </view>
+    <view class="score">
+      总分： {{totalScore}}
     </view>
     <AtToast :is-opened="show" :text="msg" :on-close="handleClose"></AtToast>
 
@@ -55,11 +58,18 @@ export default {
       direction: '',
       threshold: 30,
       numbers: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      tempArrs: []
+      tempArrs: [],
+      totalScore: 0,
     }
   },
   created(){
     this.init()
+  },
+  onShareAppMessage(res){
+    return {
+      title: '2048',
+      path: 'pages/package-2048/index'
+    }
   },
   computed: {
     isGameOver() {
@@ -100,6 +110,7 @@ export default {
   methods: {
     init () {
       this.numbers = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+      this.totalScore = 0
       this.fillEmptyCell()
       this.fillEmptyCell()
     },
@@ -187,6 +198,7 @@ export default {
               let remainBack = arr.slice(j+1,4)
               this.tempArrs[i] = remainFront.concat(sum.concat(remainBack))
               this.tempArrs[i].push(0)
+              this.totalScore+=2*arr[j]
               break
             }
             j++
@@ -201,6 +213,7 @@ export default {
               let remainBack = arr.slice(j+1,4)
               this.tempArrs[i] = remainFront.concat(sum.concat(remainBack))
               this.tempArrs[i].unshift(0)
+              this.totalScore+=2*arr[j]
               break
             }
             j--
@@ -230,12 +243,15 @@ export default {
     },
     update() {
       console.log(this.direction)
+      let lastArr = [...this.numbers].join()
       this.transformArr()
       this.removeZeros()
       this.addNumbers()
       this.recoverArr()
-      this.fillEmptyCell()
-      this.fillEmptyCell()
+      let currArr = [...this.numbers].join()
+      if(lastArr!==currArr) {
+        this.fillEmptyCell()
+      }
     },
 
   },

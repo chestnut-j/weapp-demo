@@ -18,6 +18,12 @@ export default {
     return {
     }
   },
+  onShareAppMessage(res){
+    return {
+      title: '栗子的demo',
+      path: 'pages/package-main/index'
+    }
+  },
   methods: {
     toGame () {
       Taro.navigateTo({
